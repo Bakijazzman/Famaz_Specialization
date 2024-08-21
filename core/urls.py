@@ -1,5 +1,5 @@
 from .views import update_user, login_user, logout_user, register_user, update_password, update_profile
-from .views import product, category, category_summary, index, about
+from .views import product, category, category_summary, index, about, search
 from django.urls import path
 
 
@@ -15,4 +15,5 @@ urlpatterns = [
     path("product/<int:pk>", product, name="product"),
     path('category/<str:foo>', category, name="category"),
     path('category_summary', category_summary, name="category_summary"),
+    path('search/', search, name="search"),
 ]

@@ -6,7 +6,20 @@ from django.contrib import messages
 from .forms import SignUpForm, UpdateUserForm, UpdatePasswordForm, UserInfoForm
 import json
 from cart.cart import Cart
+from django.db.models import Q
 
+
+def search(request):
+    if request.method == "POST":
+        searched =  request.POST['searched']
+        searched = Product.objects.filter(Q(name__icontains=searched) | Q(description__icontains=searched))
+        if not searched:
+            messages.success(request, ("Sorry, we don't have this product... Please enter alternative name."))
+            return render(request, "search.html", {})
+        else:    
+            return render(request, "search.html", {'searched': searched})
+    else:
+        return render(request, "search.html", {})
 
 def update_profile(request):
     if request.user.is_authenticated:
