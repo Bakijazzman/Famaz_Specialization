@@ -7,6 +7,8 @@ from .forms import SignUpForm, UpdateUserForm, UpdatePasswordForm, UserInfoForm
 import json
 from cart.cart import Cart
 from django.db.models import Q
+from payment.forms import ShippingForm
+from payment.models import ShippingAddress
 
 
 def search(request):
@@ -24,16 +26,19 @@ def search(request):
 def update_profile(request):
     if request.user.is_authenticated:
         current_user = Profile.objects.get(user__id=request.user.id)
+        shipping_user = ShippingAddress.objects.get(user__id=request.user.id)
         form = UserInfoForm(request.POST or None, instance=current_user)
+        shipping_form = ShippingForm(request.POST or None, instance=shipping_user)
         
-        if form.is_valid():
+        if form.is_valid() or shipping_form.is_valid():
             form.save()
+            shipping_form.save()
             messages.success(request, ("Profile has been Updated"))
             return redirect("index")
         else:
             for err in list(form.errors.values()):
                 messages.error(request, err)
-            return render(request, 'update_profile.html', {"form":form})
+            return render(request, 'update_profile.html', {"form":form, "shipping_form": shipping_form})
     else:
         messages.success(request, ("You have to login first"))
         return redirect("login")
