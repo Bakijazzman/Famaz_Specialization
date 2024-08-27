@@ -19,7 +19,11 @@ class ShippingAddress(models.Model):
         verbose_name_plural = "Shipping Address"
         
     def __str__(self):
-        return f"Shipping Address - {str(self.user)}"
+        if self.user:
+            name = self.user
+        else:
+            name = self.id
+        return f"Shipping Address - {str(name)}"
 
 def create_shipping(sender, instance, created, **kwargs):
     if created:
@@ -37,7 +41,11 @@ class Order(models.Model):
     date_ordered = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
-        return f"Order - {str(self.user)}"
+        if self.user:
+            name = self.user
+        else:
+            name = self.id
+        return f"Order - {str(name)}"
     
     
 class OrderItem(models.Model):
@@ -49,4 +57,8 @@ class OrderItem(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     
     def __str__(self):
-        return f"Order Item - {str(self.id)}"
+        if self.user:
+            name = self.user
+        else:
+            name = self.id
+        return f"Order Item - {str(name)}"
