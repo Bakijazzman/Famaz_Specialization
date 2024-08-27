@@ -32,7 +32,7 @@ def process_order(request):
                 if product.is_sale:
                     price = product.sale_price
                 else:
-                    price = product.sale_price
+                    price = product.price
 
                 for k,v in quantities().items():
                     if int(k) == product.id:
