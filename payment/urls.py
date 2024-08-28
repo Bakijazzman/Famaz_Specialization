@@ -1,4 +1,4 @@
-from .views import payment_success, checkout, billing_info, process_order, shipped_dash, not_shipped_dash
+from .views import payment_success, checkout, billing_info, orders, process_order, shipped_dash, not_shipped_dash
 from django.urls import path
 
 
@@ -9,4 +9,5 @@ urlpatterns = [
     path('process_order', process_order, name="process_order"),
     path('shipped_dash', shipped_dash, name="shipped_dash"),
     path('not_shipped_dash', not_shipped_dash, name="not_shipped_dash"),
+    path('orders/<int:pk>', orders, name="orders"),
 ]

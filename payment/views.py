@@ -8,6 +8,16 @@ from core.models import Product
 
 
 # Create your views here.
+def orders(request, pk):
+    if request.user.is_authenticated and request.user.is_superuser:
+        order = Order.objects.get(id=pk)
+        order_items = OrderItem.objects.filter(order=pk)
+        return render(request, "orders.html", {"order":order, "order_items":order_items})
+    else:
+        messages.success(request, "Access Denied")
+        return redirect("index")
+
+
 def not_shipped_dash(request):
     if request.user.is_authenticated and request.user.is_superuser:
         orders = Order.objects.filter(shipped=False)
