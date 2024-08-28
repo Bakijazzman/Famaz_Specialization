@@ -74,7 +74,7 @@ def process_order(request):
                 if key == "session_key":
                     del request.session[key]
 
-            messages.success(request, "Order Placed!!!")
+            messages.success(request, "Order Placed!!!, Our orders are pay on delivery, check your email for payment, delivery and delivery information")
             return redirect("index")
 
         else:
@@ -95,7 +95,7 @@ def process_order(request):
             for key in list(request.session.keys()):
                 if key == "session_key":
                     del request.session[key]
-            messages.success(request, "Order Placed!!!")
+            messages.success(request, "Order Placed!!!, Our orders are pay on delivery, check your email for payment, inspection and delivery information")
             return redirect("index")
 
     else:
